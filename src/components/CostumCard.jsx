@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../redux/reducer/reducer";
 
 import Search from "./Search";
 import ButtonLoadMore from "./ButtonLoadMore";
@@ -74,17 +74,12 @@ const CostumCard = () => {
 };
 
 const CardMasterUser = () => {
-  const [user, setUser] = useState([]);
+  const dispatch = useDispatch();
+  const usersData = useSelector((state) => state.data.usersData);
 
   useEffect(() => {
-    getAllUser();
-  }, []);
-
-  const getAllUser = async () => {
-    const response = await axios.get("https://gorest.co.in/public/v2/users");
-    // console.log(response.data);
-    setUser(response.data);
-  };
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
 
   return (
     <>
@@ -95,7 +90,7 @@ const CardMasterUser = () => {
       <div className="overflow-x-auto table-compact my-2">
         <table className="table table-zebra w-full">
           <thead>
-            <tr>
+            <tr className="text-center">
               <th>No</th>
               <th>Name</th>
               <th>Email</th>
@@ -105,9 +100,9 @@ const CardMasterUser = () => {
             </tr>
           </thead>
           <tbody>
-            {user &&
-              user.map((users, index) => (
-                <tr key={users.id}>
+            {usersData &&
+              usersData.map((users, index) => (
+                <tr key={users.id} className="text-center">
                   <th>{index + 1}</th>
                   <td>{users.name}</td>
                   <td>{users.email}</td>

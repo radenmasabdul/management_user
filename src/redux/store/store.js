@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reducerManagement from "../reducer/reducer";
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
-        data: reducerManagement.state
+        data: reducerManagement
     }
 });
+
+export default store;

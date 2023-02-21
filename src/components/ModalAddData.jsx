@@ -1,5 +1,7 @@
 import React from "react";
 
+import { FaEye } from "react-icons/fa";
+
 const ModalAddData = () => {
   return (
     <>
@@ -80,8 +82,11 @@ const ModalAddData = () => {
 const ModalViewData = () => {
   return (
     <>
-      <label htmlFor="my-modal-3" className="cursor-pointer">
-        View Data
+      <label
+        htmlFor="my-modal-3"
+        className="cursor-pointer flex justify-center"
+      >
+        <FaEye />
       </label>
 
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -93,15 +98,15 @@ const ModalViewData = () => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center">Add New Data</h3>
+          <h3 className="text-lg font-bold text-center">View Data</h3>
           <div className="divider"></div>
-          <p className="py-2">Name</p>
+          <p className="py-2 text-left">Name</p>
           <input
             type="text"
             placeholder="Input Your Name"
             className="input w-full"
           />
-          <p className="py-2">Email</p>
+          <p className="py-2 text-left">Email</p>
           <input
             type="email"
             placeholder="Input Your Email"
@@ -109,7 +114,7 @@ const ModalViewData = () => {
           />
           <label
             htmlFor="gender"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white py-2"
+            className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Gender
           </label>
@@ -125,7 +130,7 @@ const ModalViewData = () => {
           </select>
           <label
             htmlFor="status"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white py-2"
+            className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white "
           >
             Status
           </label>
