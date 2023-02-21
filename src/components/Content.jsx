@@ -7,6 +7,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { MdAccountBalance } from "react-icons/md";
 
 import { CostumCard, CardMasterUser } from "./CostumCard";
+import avatar from "../assets/avatar.png";
 
 const Content = () => {
   return (
@@ -25,7 +26,7 @@ const Content = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" />
+                  <img src={avatar} />
                 </div>
               </label>
               <ul
@@ -110,7 +111,7 @@ const ContentMaster = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" />
+                  <img src={avatar} />
                 </div>
               </label>
               <ul
