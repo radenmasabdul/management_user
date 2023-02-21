@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUser } from "../api"
+import { getAllUser, getUserById } from "../api"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchAllUsers = createAsyncThunk(
@@ -10,15 +10,34 @@ export const fetchAllUsers = createAsyncThunk(
     }
 );
 
+export const fetchUserById = createAsyncThunk(
+    "users/fetchUserById",
+    async ({ id, token }) => {
+        const response = await getUserById({ id, token });
+        return response.data;
+    }
+)
+
 const managementSlice = createSlice({
     name: "management",
-    initialState: { usersData: [] },
-    reducers: {},
+    initialState: { usersData: [], userDataById: [] },
+    reducers: {
+        setToken: (state, action) => {
+            state.token = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
                 state.usersData = action.payload;
-            });
+            })
+            .addCase(fetchUserById.fulfilled, (state, action) => {
+                state.userDataById = action.payload;
+            })
+            .addCase(fetchUserById.rejected, (state, action) => {
+                state.userDataById = [];
+                console.log(action.error);
+            })
     }
 });
 

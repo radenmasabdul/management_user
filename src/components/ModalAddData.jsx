@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchUserById } from "../redux/reducer/reducer";
 
 import { FaEye } from "react-icons/fa";
 
@@ -80,6 +83,16 @@ const ModalAddData = () => {
 };
 
 const ModalViewData = () => {
+  const dispatch = useDispatch();
+  const userDataById = useSelector((state) => state.data.userDataById);
+  const token = useSelector((state) => state.token);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchUserById({ id, token }));
+  }, [dispatch, id, token]);
+
   return (
     <>
       <label
@@ -100,50 +113,60 @@ const ModalViewData = () => {
           </label>
           <h3 className="text-lg font-bold text-center">View Data</h3>
           <div className="divider"></div>
-          <p className="py-2 text-left">Name</p>
-          <input
-            type="text"
-            placeholder="Input Your Name"
-            className="input w-full"
-          />
-          <p className="py-2 text-left">Email</p>
-          <input
-            type="email"
-            placeholder="Input Your Email"
-            className="input w-full"
-          />
-          <label
-            htmlFor="gender"
-            className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Gender
-          </label>
-          <select
-            id="gender"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option disabled value="role" className="my-4 capitalize">
-              select gender
-            </option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-          <label
-            htmlFor="status"
-            className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-          >
-            Status
-          </label>
-          <select
-            id="status"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option disabled value="role" className="my-4 capitalize">
-              select status
-            </option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+
+          {userDataById &&
+            userDataById.map((users) => (
+              <>
+                <p className="py-2 text-left">Name</p>
+                <input
+                  type="text"
+                  placeholder="Input Your Name"
+                  className="input w-full"
+                  value={users.name}
+                  readOnly
+                />
+                <p className="py-2 text-left">Email</p>
+                <input
+                  type="email"
+                  placeholder="Input Your Email"
+                  className="input w-full"
+                  value={users.email}
+                  readOnly
+                />
+                <label
+                  htmlFor="gender"
+                  className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Gender
+                </label>
+                <select
+                  id="gender"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option disabled value="role" className="my-4 capitalize">
+                    select gender
+                  </option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <label
+                  htmlFor="status"
+                  className="py-2 text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                >
+                  Status
+                </label>
+                <select
+                  id="status"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option disabled value="role" className="my-4 capitalize">
+                    select status
+                  </option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </>
+            ))}
         </div>
       </div>
     </>

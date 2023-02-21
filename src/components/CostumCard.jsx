@@ -3,11 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../redux/reducer/reducer";
 
 import Search from "./Search";
-import ButtonLoadMore from "./ButtonLoadMore";
 import Pagination from "./Pagination";
 import { ModalAddData, ModalViewData } from "./ModalAddData";
 
 const CostumCard = () => {
+  const dispatch = useDispatch();
+  const usersData = useSelector((state) => state.data.usersData);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+
   return (
     <>
       <div className="flex flex-wrap gap-2 justify-between">
@@ -28,46 +34,25 @@ const CostumCard = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>CyGanderton@mail.co</td>
-              <td>Male</td>
-              <td>Active</td>
-              <td>
-                <button>Edit</button>
-                <button>Hapus</button>
-              </td>
-            </tr>
-
-            <tr>
-              <th>2</th>
-              <td>Cy Ganderton</td>
-              <td>CyGanderton@mail.co</td>
-              <td>Male</td>
-              <td>Active</td>
-              <td>
-                <button>Edit</button>
-                <button>Hapus</button>
-              </td>
-            </tr>
-
-            <tr>
-              <th>3</th>
-              <td>Cy Ganderton</td>
-              <td>CyGanderton@mail.co</td>
-              <td>Male</td>
-              <td>Active</td>
-              <td>
-                <button>Edit</button>
-                <button>Hapus</button>
-              </td>
-            </tr>
+            {usersData &&
+              usersData.map((users, index) => (
+                <tr key={users.id} className="text-center">
+                  <th>{index + 1}</th>
+                  <td>{users.name}</td>
+                  <td>{users.email}</td>
+                  <td>{users.gender}</td>
+                  <td>{users.status}</td>
+                  <td className="flex justify-center gap-2">
+                    <button>Edit</button>
+                    <button>Hapus</button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
       <div className="flex flex-wrap justify-center py-5">
-        <ButtonLoadMore />
+        <Pagination />
       </div>
     </>
   );
