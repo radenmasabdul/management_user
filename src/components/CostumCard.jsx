@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import axios from "axios";
 
@@ -76,18 +75,14 @@ const CostumCard = () => {
 
 const CardMasterUser = () => {
   const [user, setUser] = useState([]);
-  const [page, setPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getAllUser(page);
-  }, [page]);
+    getAllUser();
+  }, []);
 
-  const getAllUser = async (page) => {
-    const response = await axios.get(
-      `https://gorest.co.in/public/v2/users?page=${page}`
-    );
-    console.log(response.data);
+  const getAllUser = async () => {
+    const response = await axios.get("https://gorest.co.in/public/v2/users");
+    // console.log(response.data);
     setUser(response.data);
   };
 
@@ -127,11 +122,7 @@ const CardMasterUser = () => {
         </table>
       </div>
       <div className="flex flex-wrap justify-center py-5">
-        <Pagination
-          nPages={page}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <Pagination />
       </div>
     </>
   );
