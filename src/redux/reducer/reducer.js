@@ -34,9 +34,17 @@ export const updateDataUsers = createAsyncThunk(
     }
 )
 
+export const deleteDataUsers = createAsyncThunk(
+    "users/deleteDataUsers",
+    async ({ user, id }) => {
+        const response = await deleteUsers(user, id)
+        return response.data;
+    }
+)
+
 const managementSlice = createSlice({
     name: "management",
-    initialState: { usersData: [], userDataById: [], newUsersData: [], updateUser: [], token: null },
+    initialState: { usersData: [], newUsersData: [], token: null, status: "idle" },
     reducers: {
         setToken: (state, action) => {
             state.token = action.payload;
@@ -44,6 +52,7 @@ const managementSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            //get all user
             .addCase(fetchAllUsers.pending, (state) => {
                 state.status = "loading";
             })
@@ -51,20 +60,19 @@ const managementSlice = createSlice({
                 state.status = "succeeded";
                 state.usersData = action.payload;
             })
+            //get user by id
             .addCase(fetchUserById.pending, (state) => {
                 state.status = "loading";
             })
             .addCase(fetchUserById.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                // fetch data user by id di userDataById
-                const { id, ...userData } = action.payload;
-                state.userDataById[id] = userData;
+                state.usersData = action.payload;
             })
             .addCase(fetchUserById.rejected, (state, action) => {
                 state.status = "failed";
-                state.userDataById[action.meta.arg.id] = null;
                 console.log(action.error);
             })
+            //create new user
             .addCase(createNewUsers.pending, (state) => {
                 state.status = "loading";
             })
@@ -76,18 +84,27 @@ const managementSlice = createSlice({
                 state.status = "failed";
                 console.log(action.error);
             })
+            //update user
             .addCase(updateDataUsers.pending, (state) => {
                 state.status = "loading";
             })
             .addCase(updateDataUsers.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.updateUser = action.payload;
-                // Update data user by id di userDataById
-                const updatedUser = action.payload;
-                const userId = updatedUser.id;
-                state.userDataById[userId] = updatedUser;
+                state.usersData = action.payload;
             })
             .addCase(updateDataUsers.rejected, (state, action) => {
+                state.status = "failed";
+                console.log(action.error);
+            })
+            //delete user
+            .addCase(deleteDataUsers.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(deleteDataUsers.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.usersData = action.payload;
+            })
+            .addCase(deleteDataUsers.rejected, (state, action) => {
                 state.status = "failed";
                 console.log(action.error);
             })
