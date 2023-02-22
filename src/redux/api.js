@@ -25,3 +25,12 @@ export const createUsers = async (user) => {
     });
     return response;
 };
+
+export const updateUsers = async (id, user) => {
+    const response = await axios.put(`https://gorest.co.in/public/v2/users/${id}`, user, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return response;
+}

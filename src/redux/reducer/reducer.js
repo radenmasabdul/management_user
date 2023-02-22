@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUser, getUserById, createUsers } from "../api"
+import { getAllUser, getUserById, createUsers, updateUsers } from "../api"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchAllUsers = createAsyncThunk(
@@ -26,9 +26,17 @@ export const createNewUsers = createAsyncThunk(
     }
 )
 
+export const updateDataUsers = createAsyncThunk(
+    "users/updateDataUsers",
+    async ({ user, id }) => {
+        const response = await updateUsers(user, id)
+        return response.data;
+    }
+)
+
 const managementSlice = createSlice({
     name: "management",
-    initialState: { usersData: [], userDataById: [], newUsersData: [], token: null},
+    initialState: { usersData: [], userDataById: [], newUsersData: [], updateUser: [], token: null },
     reducers: {
         setToken: (state, action) => {
             state.token = action.payload;
@@ -36,18 +44,52 @@ const managementSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchAllUsers.pending, (state) => {
+                state.status = "loading";
+            })
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
+                state.status = "succeeded";
                 state.usersData = action.payload;
             })
+            .addCase(fetchUserById.pending, (state) => {
+                state.status = "loading";
+            })
             .addCase(fetchUserById.fulfilled, (state, action) => {
-                state.userDataById = action.payload;
+                state.status = "succeeded";
+                // fetch data user by id di userDataById
+                const { id, ...userData } = action.payload;
+                state.userDataById[id] = userData;
             })
             .addCase(fetchUserById.rejected, (state, action) => {
-                state.userDataById = [];
+                state.status = "failed";
+                state.userDataById[action.meta.arg.id] = null;
                 console.log(action.error);
             })
+            .addCase(createNewUsers.pending, (state) => {
+                state.status = "loading";
+            })
             .addCase(createNewUsers.fulfilled, (state, action) => {
+                state.status = "succeeded";
                 state.newUsersData = action.payload;
+            })
+            .addCase(createNewUsers.rejected, (state, action) => {
+                state.status = "failed";
+                console.log(action.error);
+            })
+            .addCase(updateDataUsers.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(updateDataUsers.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.updateUser = action.payload;
+                // Update data user by id di userDataById
+                const updatedUser = action.payload;
+                const userId = updatedUser.id;
+                state.userDataById[userId] = updatedUser;
+            })
+            .addCase(updateDataUsers.rejected, (state, action) => {
+                state.status = "failed";
+                console.log(action.error);
             })
     }
 });
