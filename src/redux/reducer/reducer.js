@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllUser, getUserById } from "../api"
+import { getAllUser, getUserById, createUsers } from "../api"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchAllUsers = createAsyncThunk(
@@ -18,9 +18,17 @@ export const fetchUserById = createAsyncThunk(
     }
 )
 
+export const createNewUsers = createAsyncThunk(
+    "users/createNewUsers",
+    async (user) => {
+        const response = await createUsers(user);
+        return response.data;
+    }
+)
+
 const managementSlice = createSlice({
     name: "management",
-    initialState: { usersData: [], userDataById: [] },
+    initialState: { usersData: [], userDataById: [], newUsersData: [], token: null},
     reducers: {
         setToken: (state, action) => {
             state.token = action.payload;
@@ -37,6 +45,9 @@ const managementSlice = createSlice({
             .addCase(fetchUserById.rejected, (state, action) => {
                 state.userDataById = [];
                 console.log(action.error);
+            })
+            .addCase(createNewUsers.fulfilled, (state, action) => {
+                state.newUsersData = action.payload;
             })
     }
 });

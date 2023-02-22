@@ -1,11 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchUserById } from "../redux/reducer/reducer";
+import { fetchUserById, createNewUsers } from "../redux/reducer/reducer";
+import { token } from "../redux/api";
 
 import { FaEye } from "react-icons/fa";
 
 const ModalAddData = () => {
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [status, setStatus] = useState("");
+
+  const saveUser = (e) => {
+    e.preventDefault();
+    const user = {
+      name: name,
+      email: email,
+      gender: gender,
+      status: status,
+      token: token,
+    };
+    console.log("Data user yang akan dikirim:", user);
+    dispatch(createNewUsers(user));
+    alert("User berhasil dibuat!");
+  };
+
   return (
     <>
       <label htmlFor="my-modal-3" className="btn btn-info text-white">
@@ -13,7 +35,7 @@ const ModalAddData = () => {
       </label>
 
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-      <div className="modal">
+      <form className="modal" onSubmit={saveUser}>
         <div className="modal-box relative">
           <label
             htmlFor="my-modal-3"
@@ -28,12 +50,16 @@ const ModalAddData = () => {
             type="text"
             placeholder="Input Your Name"
             className="input w-full"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <p className="py-2">Email</p>
           <input
             type="email"
             placeholder="Input Your Email"
             className="input w-full"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label
             htmlFor="gender"
@@ -42,10 +68,12 @@ const ModalAddData = () => {
             Gender
           </label>
           <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
             id="gender"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option disabled value="role" className="my-4 capitalize">
+            <option disabled value="gender" className="my-4 capitalize">
               select gender
             </option>
             <option value="male">Male</option>
@@ -58,10 +86,12 @@ const ModalAddData = () => {
             Status
           </label>
           <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option disabled value="role" className="my-4 capitalize">
+            <option disabled value="status" className="my-4 capitalize">
               select status
             </option>
             <option value="active">Active</option>
@@ -77,7 +107,7 @@ const ModalAddData = () => {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };
@@ -143,7 +173,7 @@ const ModalViewData = () => {
                   id="gender"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option disabled value="role" className="my-4 capitalize">
+                  <option disabled value="gender" className="my-4 capitalize">
                     select gender
                   </option>
                   <option value="male">Male</option>
@@ -159,7 +189,7 @@ const ModalViewData = () => {
                   id="status"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option disabled value="role" className="my-4 capitalize">
+                  <option disabled value="status" className="my-4 capitalize">
                     select status
                   </option>
                   <option value="active">Active</option>
