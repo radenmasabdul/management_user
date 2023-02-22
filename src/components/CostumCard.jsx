@@ -4,7 +4,9 @@ import { fetchAllUsers } from "../redux/reducer/reducer";
 
 import Search from "./Search";
 import Pagination from "./Pagination";
-import { ModalAddData, ModalViewData } from "./ModalAddData";
+import { ModalAddData, ModalViewData, ModalEditData } from "./ModalAddData";
+
+import { AiFillDelete } from "react-icons/ai";
 
 const CostumCard = () => {
   const dispatch = useDispatch();
@@ -43,8 +45,8 @@ const CostumCard = () => {
                   <td>{users.gender}</td>
                   <td>{users.status}</td>
                   <td className="flex justify-center gap-2">
-                    <button>Edit</button>
-                    <button>Hapus</button>
+                    <ModalEditData />
+                    <AiFillDelete />
                   </td>
                 </tr>
               ))}
