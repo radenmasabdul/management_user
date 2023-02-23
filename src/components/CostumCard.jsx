@@ -44,8 +44,8 @@ const CostumCard = () => {
                   <td>{users.email}</td>
                   <td>{users.gender}</td>
                   <td>{users.status}</td>
-                  <td className="flex justify-center gap-2">
-                    <ModalEditData />
+                  <td className="flex flex-wrap gap-2 text-center">
+                    <ModalEditData id={users.id} />
                     <AiFillDelete />
                   </td>
                 </tr>
@@ -96,7 +96,7 @@ const CardMasterUser = () => {
                   <td>{users.gender}</td>
                   <td>{users.status}</td>
                   <td>
-                    <ModalViewData />
+                    <ModalViewData id={users.id} />
                   </td>
                 </tr>
               ))}

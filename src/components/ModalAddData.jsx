@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchUserById, createNewUsers } from "../redux/reducer/reducer";
+import { useDispatch } from "react-redux";
+import {
+  updateDataUsers,
+  createNewUsers,
+  fetchAllUsers,
+} from "../redux/reducer/reducer";
 import { token } from "../redux/api";
+
+import axios from "axios";
 
 import { FaEye } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
@@ -113,21 +118,45 @@ const ModalAddData = () => {
   );
 };
 
-const ModalViewData = () => {
+const ModalViewData = (props) => {
+  const { id } = props;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    fetchUserById(id);
+  }, []);
+
+  const fetchUserById = async (id) => {
+    // console.log("ini id:" + id);
+    const response = await axios.get(
+      `https://gorest.co.in/public/v2/users/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setName(response.data.name);
+    setEmail(response.data.email);
+    setGender(response.data.gender);
+    setStatus(response.data.status);
+    // console.log("ini response:" + response);
+  };
+
   return (
     <>
-      <label
-        htmlFor="my-modal-2"
-        className="cursor-pointer flex justify-center"
-      >
+      <label htmlFor={id} className="cursor-pointer flex justify-center">
         <FaEye />
       </label>
 
-      <input type="checkbox" id="my-modal-2" className="modal-toggle" />
+      <input type="checkbox" id={id} className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
           <label
-            htmlFor="my-modal-2"
+            htmlFor={id}
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -140,12 +169,18 @@ const ModalViewData = () => {
             type="text"
             placeholder="Input Your Name"
             className="input w-full"
+            value={name}
+            readOnly
+            disabled
           />
           <p className="py-2 text-left">Email</p>
           <input
             type="email"
             placeholder="Input Your Email"
             className="input w-full"
+            value={email}
+            readOnly
+            disabled
           />
           <label
             htmlFor="gender"
@@ -154,6 +189,9 @@ const ModalViewData = () => {
             Gender
           </label>
           <select
+            value={gender}
+            readOnly
+            disabled
             id="gender"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
@@ -170,6 +208,9 @@ const ModalViewData = () => {
             Status
           </label>
           <select
+            value={status}
+            readOnly
+            disabled
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
@@ -185,21 +226,60 @@ const ModalViewData = () => {
   );
 };
 
-const ModalEditData = () => {
+const ModalEditData = (props) => {
+  const { id } = props;
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    fetchUserById(id);
+    dispatch(updateDataUsers);
+  }, [id, token, dispatch]);
+
+  const fetchUserById = async (id) => {
+    const response = await axios.get(
+      `https://gorest.co.in/public/v2/users/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setName(response.data.name);
+    setEmail(response.data.email);
+    setGender(response.data.gender);
+    setStatus(response.data.status);
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const updatedData = { name, email, gender, status };
+    await axios.put(`https://gorest.co.in/public/v2/users/${id}`, updatedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(updateDataUsers(id, updatedData));
+    dispatch(fetchAllUsers());
+    alert("User berhasil diperbaharui!");
+    // console.log("Data user yang akan dikirim:", updatedData);
+    // console.log(id);
+  };
+
   return (
     <>
-      <label
-        htmlFor="my-modal-1"
-        className="cursor-pointer flex justify-center"
-      >
+      <label htmlFor={id} className="cursor-pointer flex justify-center">
         <FaUserEdit />
       </label>
 
-      <input type="checkbox" id="my-modal-1" className="modal-toggle" />
-      <form className="modal">
+      <input type="checkbox" id={id} className="modal-toggle" />
+      <form className="modal" onSubmit={handleSave}>
         <div className="modal-box relative">
           <label
-            htmlFor="my-modal-1"
+            htmlFor={id}
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -211,12 +291,16 @@ const ModalEditData = () => {
             type="text"
             placeholder="Input Your Name"
             className="input w-full"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <p className="py-2 text-left">Email</p>
           <input
             type="email"
             placeholder="Input Your Email"
             className="input w-full"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label
             htmlFor="gender"
@@ -225,6 +309,8 @@ const ModalEditData = () => {
             Gender
           </label>
           <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
             id="gender"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
@@ -241,6 +327,8 @@ const ModalEditData = () => {
             Status
           </label>
           <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >

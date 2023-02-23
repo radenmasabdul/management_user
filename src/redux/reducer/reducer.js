@@ -12,8 +12,8 @@ export const fetchAllUsers = createAsyncThunk(
 
 export const fetchUserById = createAsyncThunk(
     "users/fetchUserById",
-    async ({ id, token }) => {
-        const response = await getUserById({ id, token });
+    async (id) => {
+        const response = await getUserById(id)
         return response.data;
     }
 )
@@ -28,8 +28,8 @@ export const createNewUsers = createAsyncThunk(
 
 export const updateDataUsers = createAsyncThunk(
     "users/updateDataUsers",
-    async ({ user, id }) => {
-        const response = await updateUsers(user, id)
+    async (id, user) => {
+        const response = await updateUsers(id, user)
         return response.data;
     }
 )
@@ -44,7 +44,7 @@ export const deleteDataUsers = createAsyncThunk(
 
 const managementSlice = createSlice({
     name: "management",
-    initialState: { usersData: [], newUsersData: [], token: null, status: "idle" },
+    initialState: { usersData: [], newUsersData: [], UserDataById: [], UpdateUserData: [], token: null, status: "idle" },
     reducers: {
         setToken: (state, action) => {
             state.token = action.payload;
@@ -66,7 +66,11 @@ const managementSlice = createSlice({
             })
             .addCase(fetchUserById.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.usersData = action.payload;
+                // state.usersData = action.payload;
+                let index = state.UserDataById.findIndex((i) => i.id === action.payload.id)
+                if (index != -1) {
+                    state.UserDataById[index] = { ...action.payload }
+                }
             })
             .addCase(fetchUserById.rejected, (state, action) => {
                 state.status = "failed";
@@ -90,7 +94,11 @@ const managementSlice = createSlice({
             })
             .addCase(updateDataUsers.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.usersData = action.payload;
+                state.UpdateUserData = action.payload;
+                // let index = state.UserDataById.findIndex((i) => i.id === action.payload.id)
+                // if (index != -1) {
+                //     state.UserDataById[index] = { ...action.payload }
+                // }
             })
             .addCase(updateDataUsers.rejected, (state, action) => {
                 state.status = "failed";

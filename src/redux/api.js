@@ -8,7 +8,7 @@ export const getAllUser = async () => {
     return response;
 };
 
-export const getUserById = async (id, token) => {
+export const getUserById = async (id) => {
     const response = await axios.get(`https://gorest.co.in/public/v2/users/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
