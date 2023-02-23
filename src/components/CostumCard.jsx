@@ -5,6 +5,8 @@ import { fetchAllUsers } from "../redux/reducer/reducer";
 import axios from "axios";
 import { token } from "../redux/api";
 
+import Swal from "sweetalert2";
+
 import Search from "./Search";
 import Pagination from "./Pagination";
 import { ModalAddData, ModalViewData, ModalEditData } from "./ModalAddData";
@@ -20,13 +22,37 @@ const CostumCard = () => {
   }, [dispatch]);
 
   const deleteUser = async (id) => {
-    await axios.delete(`https://gorest.co.in/public/v2/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://gorest.co.in/public/v2/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            Swal.fire({
+              title: "Successfully",
+              text: "Users has been deleted.",
+              icon: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Ok",
+            });
+            dispatch(fetchAllUsers());
+          });
+      } else {
+        return;
+      }
     });
-    dispatch(fetchAllUsers());
-    alert("User Berhasil di Hapus");
   };
 
   return (
