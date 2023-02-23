@@ -23,15 +23,16 @@ export const createUsers = async (user) => {
             Authorization: `Bearer ${token}`
         }
     })
-        .then(response => {
-            alert("User Berhasil Dibuat")
-            return response
-        })
-        .catch(error => {
-            // console.log(error.response.data.error)
-            alert("Cek Kembali Data Yang Diisi")
-            // return error
-        })
+    return response;
+    // .then(response => {
+    //     alert("User Berhasil Dibuat")
+    //     return response
+    // })
+    // .catch(error => {
+    //     // console.log(error.response.data.error)
+    //     alert("Cek Kembali Data Yang Diisi")
+    //     // return error
+    // })
 };
 
 export const updateUsers = async (id, user) => {

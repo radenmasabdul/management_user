@@ -31,9 +31,16 @@ const ModalAddData = () => {
       status: status,
       token: token,
     };
-    console.log("Data user yang akan dikirim:", user);
+    // console.log("Data user yang akan dikirim:", user);
     dispatch(createNewUsers(user));
     // alert("User berhasil dibuat!");
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Your work has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
@@ -60,7 +67,7 @@ const ModalAddData = () => {
             className="input w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            // required
+            required
           />
           <p className="py-2">Email</p>
           <input
@@ -69,7 +76,7 @@ const ModalAddData = () => {
             className="input w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            // required
+            required
           />
           <label
             htmlFor="gender"
@@ -82,7 +89,7 @@ const ModalAddData = () => {
             onChange={(e) => setGender(e.target.value)}
             id="gender"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            // required
+            required
           >
             <option className="my-4 capitalize">select gender</option>
             <option value="male">Male</option>
@@ -99,7 +106,7 @@ const ModalAddData = () => {
             onChange={(e) => setStatus(e.target.value)}
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            // required
+            required
           >
             <option className="my-4 capitalize">select status</option>
             <option value="active">Active</option>
