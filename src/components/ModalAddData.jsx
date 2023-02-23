@@ -160,7 +160,7 @@ const ModalViewData = (props) => {
   return (
     <>
       <label htmlFor={id} className="cursor-pointer flex justify-center">
-        <FaEye />
+        <FaEye className="fill-green-500" size={20} />
       </label>
 
       <input type="checkbox" id={id} className="modal-toggle" />
@@ -172,7 +172,7 @@ const ModalViewData = (props) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center text-white">
+          <h3 className="text-lg font-bold text-center dark:text-white">
             View Data
           </h3>
           <div className="divider before:bg-slate-800 after:bg-slate-800 dark:before:bg-white dark:after:bg-white" />
@@ -292,7 +292,7 @@ const ModalEditData = (props) => {
   return (
     <>
       <label htmlFor={id} className="cursor-pointer flex justify-center">
-        <FaUserEdit />
+        <FaUserEdit className="fill-blue-500" size={20} />
       </label>
 
       <input type="checkbox" id={id} className="modal-toggle" />

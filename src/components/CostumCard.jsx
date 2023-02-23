@@ -84,11 +84,12 @@ const CostumCard = () => {
                   <td>{users.email}</td>
                   <td>{users.gender}</td>
                   <td>{users.status}</td>
-                  <td className="">
+                  <td className="flex justify-center gap-2">
                     <ModalEditData id={users.id} />
                     <AiFillDelete
                       onClick={() => deleteUser(users.id)}
                       className="fill-red-600 cursor-pointer"
+                      size={20}
                     />
                   </td>
                 </tr>
