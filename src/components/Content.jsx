@@ -107,7 +107,7 @@ const Content = () => {
         </div>
       </aside>
       <div className="py-6 sm:ml-64">
-        <div className="p-4 mx-2 border-2 border-gray-200 border-dashed rounded-lg dark:border-slate-800 mt-14">
+        <div className="p-4 mx-2 border-2 border-slate-800 border-dashed rounded-lg dark:border-white mt-14">
           <CostumCard />
         </div>
       </div>
@@ -212,8 +212,8 @@ const ContentMaster = () => {
           </ul>
         </div>
       </aside>
-      <div className="py-6 sm:ml-64 ">
-        <div className="p-4 mx-2 border-2 border-gray-200 border-dashed rounded-lg dark:border-slate-800 mt-14">
+      <div className="py-6 sm:ml-64">
+        <div className="p-4 mx-2 border-2 border-slate-800 border-dashed rounded-lg dark:border-white mt-14">
           <CardMasterUser />
         </div>
       </div>

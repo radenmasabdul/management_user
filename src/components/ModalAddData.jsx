@@ -51,29 +51,31 @@ const ModalAddData = () => {
 
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />
       <form className="modal" onSubmit={saveUser}>
-        <div className="modal-box relative">
+        <div className="modal-box relative dark:bg-slate-800">
           <label
             htmlFor="my-modal-3"
-            className="btn btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-sm btn-circle absolute right-2 top-2 hover:dark:bg-teal-500"
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center">Add New Data</h3>
-          <div className="divider"></div>
-          <p className="py-2">Name</p>
+          <h3 className="text-lg font-bold text-center dark:text-white">
+            Add New Data
+          </h3>
+          <div className="divider before:bg-slate-800 after:bg-slate-800 dark:before:bg-white dark:after:bg-white" />
+          <p className="py-2 dark:text-white">Name</p>
           <input
             type="text"
             placeholder="Input Your Name"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <p className="py-2">Email</p>
+          <p className="py-2 dark:text-white">Email</p>
           <input
             type="email"
             placeholder="Input Your Email"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -91,7 +93,7 @@ const ModalAddData = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           >
-            <option className="my-4 capitalize">select gender</option>
+            <option className="my-4">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -108,7 +110,7 @@ const ModalAddData = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           >
-            <option className="my-4 capitalize">select status</option>
+            <option className="my-4">Select Status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
@@ -163,21 +165,21 @@ const ModalViewData = (props) => {
 
       <input type="checkbox" id={id} className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box relative">
+        <div className="modal-box relative dark:bg-slate-800">
           <label
             htmlFor={id}
-            className="btn btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-sm btn-circle absolute right-2 top-2 hover:dark:bg-teal-500"
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center">View Data</h3>
-          <div className="divider"></div>
-
-          <p className="py-2 text-left">Name</p>
+          <h3 className="text-lg font-bold text-center text-white">
+            View Data
+          </h3>
+          <div className="divider before:bg-slate-800 after:bg-slate-800 dark:before:bg-white dark:after:bg-white" />
+          <p className="py-2 text-left dark:text-white">Name</p>
           <input
             type="text"
-            placeholder="Input Your Name"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={name}
             readOnly
             disabled
@@ -185,8 +187,7 @@ const ModalViewData = (props) => {
           <p className="py-2 text-left">Email</p>
           <input
             type="email"
-            placeholder="Input Your Email"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={email}
             readOnly
             disabled
@@ -296,28 +297,28 @@ const ModalEditData = (props) => {
 
       <input type="checkbox" id={id} className="modal-toggle" />
       <form className="modal" onSubmit={handleSave}>
-        <div className="modal-box relative">
+        <div className="modal-box relative dark:bg-slate-800">
           <label
             htmlFor={id}
-            className="btn btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-sm btn-circle absolute right-2 top-2 hover:dark:bg-teal-500"
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold text-center">Edit Data</h3>
-          <div className="divider"></div>
-          <p className="py-2 text-left">Name</p>
+          <h3 className="text-lg font-bold text-center dark:text-white">
+            Edit Data
+          </h3>
+          <div className="divider before:bg-slate-800 after:bg-slate-800 dark:before:bg-white dark:after:bg-white" />
+          <p className="py-2 text-left dark:text-white">Name</p>
           <input
             type="text"
-            placeholder="Input Your Name"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <p className="py-2 text-left">Email</p>
+          <p className="py-2 text-left dark:text-white">Email</p>
           <input
             type="email"
-            placeholder="Input Your Email"
-            className="input w-full"
+            className="input w-full dark:bg-slate-800 dark:text-white dark:border-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
