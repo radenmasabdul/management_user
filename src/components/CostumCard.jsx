@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../redux/reducer/reducer";
 
+import axios from "axios";
+import { token } from "../redux/api";
+
 import Search from "./Search";
 import Pagination from "./Pagination";
 import { ModalAddData, ModalViewData, ModalEditData } from "./ModalAddData";
@@ -15,6 +18,16 @@ const CostumCard = () => {
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
+
+  const deleteUser = async (id) => {
+    await axios.delete(`https://gorest.co.in/public/v2/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(fetchAllUsers());
+    alert("User Berhasil di Hapus");
+  };
 
   return (
     <>
@@ -46,7 +59,10 @@ const CostumCard = () => {
                   <td>{users.status}</td>
                   <td className="flex flex-wrap gap-2 text-center">
                     <ModalEditData id={users.id} />
-                    <AiFillDelete />
+                    <AiFillDelete
+                      onClick={() => deleteUser(users.id)}
+                      className="fill-red-600 cursor-pointer"
+                    />
                   </td>
                 </tr>
               ))}

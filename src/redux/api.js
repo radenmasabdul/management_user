@@ -18,12 +18,20 @@ export const getUserById = async (id) => {
 }
 
 export const createUsers = async (user) => {
-    const response = await axios.post("https://gorest.co.in/public/v2/users/", user, {
+    await axios.post("https://gorest.co.in/public/v2/users/", user, {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    });
-    return response;
+    })
+        .then(response => {
+            alert("User Berhasil Dibuat")
+            return response
+        })
+        .catch(error => {
+            // console.log(error.response.data.error)
+            alert("Cek Kembali Data Yang Diisi")
+            // return error
+        })
 };
 
 export const updateUsers = async (id, user) => {
@@ -35,9 +43,8 @@ export const updateUsers = async (id, user) => {
     return response;
 }
 
-export const deleteUsers = async (id, user, token) => {
+export const deleteUsers = async (id) => {
     const response = await axios.delete(`https://gorest.co.in/public/v2/users/${id}`, {
-        data: user,
         headers: {
             Authorization: `Bearer ${token}`
         }

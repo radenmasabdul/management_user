@@ -31,7 +31,7 @@ const ModalAddData = () => {
     };
     console.log("Data user yang akan dikirim:", user);
     dispatch(createNewUsers(user));
-    alert("User berhasil dibuat!");
+    // alert("User berhasil dibuat!");
   };
 
   return (
@@ -58,6 +58,7 @@ const ModalAddData = () => {
             className="input w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            // required
           />
           <p className="py-2">Email</p>
           <input
@@ -66,6 +67,7 @@ const ModalAddData = () => {
             className="input w-full"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            // required
           />
           <label
             htmlFor="gender"
@@ -78,10 +80,9 @@ const ModalAddData = () => {
             onChange={(e) => setGender(e.target.value)}
             id="gender"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            // required
           >
-            <option disabled value="gender" className="my-4 capitalize">
-              select gender
-            </option>
+            <option className="my-4 capitalize">select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -96,10 +97,9 @@ const ModalAddData = () => {
             onChange={(e) => setStatus(e.target.value)}
             id="status"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            // required
           >
-            <option disabled value="status" className="my-4 capitalize">
-              select status
-            </option>
+            <option className="my-4 capitalize">select status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
