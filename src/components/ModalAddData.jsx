@@ -9,6 +9,8 @@ import { token } from "../redux/api";
 
 import axios from "axios";
 
+import Swal from "sweetalert2";
+
 import { FaEye } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 
@@ -256,17 +258,27 @@ const ModalEditData = (props) => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    const updatedData = { name, email, gender, status };
-    await axios.put(`https://gorest.co.in/public/v2/users/${id}`, updatedData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedData = { name, email, gender, status };
+        axios.put(`https://gorest.co.in/public/v2/users/${id}`, updatedData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        Swal.fire("Saved!", "", "success");
+        dispatch(updateDataUsers(id, updatedData));
+        dispatch(fetchAllUsers());
+        // console.log("Data user yang akan dikirim:", updatedData);
+        // console.log(id);
+      }
     });
-    dispatch(updateDataUsers(id, updatedData));
-    dispatch(fetchAllUsers());
-    alert("User berhasil diperbaharui!");
-    // console.log("Data user yang akan dikirim:", updatedData);
-    // console.log(id);
   };
 
   return (

@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../redux/reducer/reducer";
 
-import axios from "axios";
 import { token } from "../redux/api";
+
+import axios from "axios";
 
 import Swal from "sweetalert2";
 
